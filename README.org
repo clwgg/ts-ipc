@@ -1,1 +1,46 @@
+* ts-ipc: inter-process communication with tree sequences
+~ts-ipc~ provides a light-weight framework for end-to-end population genetic
+simulations that utilize tree sequence recording to combine forward simulation
+and coalescent simulation.
+
+It facilitates communication between the forward simulator [[https://messerlab.org/slim/][SLiM]] and python,
+where much of the [[https://tskit.dev][tree sequence ecosystem]] lives:
+[[file:img/codeflow.png]]
+
+** Info
+The major aim of this framework is to define one set of ~Arguments~ that will be
+used by all simulation components. This is primarily for *consistency*: some
+parameters may be shared between several components, so it is appealing to only
+have to define them once.
+
+Another aim is *persistence*: using the tree sequence data structure to save
+intermediate files, as well as to persist the entire simulation configuration
+into the tree sequence metadata allows for high reproducibility and easier
+debugging.
+
+** Usage
+The framework provides various classes to either inherit from or use directly:
+- ~Arguments~
+  - based on python dataclasses, inherit from ~Arguments~ and define arguments
+    for all simulation components in dataclass-style
+- ~PreCapSim~, ~Recapitation~, ~AddNeutralMut~
+  - abstract base classes for python-based simulation components
+  - need to define the functions ~_assert_required~ and ~_make_ts~ in custom
+    child classes
+- ~FwdSim~
+  - run ~SLiM~ simulation, given ~.slim~ script defined in ~Arguments~
+- ~Simulation~
+  - define full simulation, given a set of components
+
+** Examples
+For usage examples, see e.g.:
+- [[https://github.com/clwgg/spatial_extinction_sim]]
+
+** Classes provided by ~ts-ipc~
+- ~Arguments~
+- ~PreCapSim~
+- ~Recapitation~
+- ~AddNeutralMut~
+- ~FwdSim~
+- ~Simulation~
 
