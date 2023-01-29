@@ -1,4 +1,4 @@
-from .tspipe import (
+from .ts_ipc import (
     Simulation,
     Arguments,
     PreCapSim,
